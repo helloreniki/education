@@ -52,6 +52,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'licence_start_date' => 'datetime',
+        'date_of_employment' => 'datetime',
     ];
 
     public function roles()

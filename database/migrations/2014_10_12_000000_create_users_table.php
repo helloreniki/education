@@ -22,8 +22,10 @@ return new class extends Migration
             $table->foreignId('work_position_id');
             $table->foreignId('profession_id');
             $table->foreignId('department_id');
-            $table->integer('phone_number');
+            $table->string('phone_number');
             $table->date('date_of_employment');
+            $table->integer('licence_number');
+            $table->date('licence_start_date');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

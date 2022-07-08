@@ -13,6 +13,8 @@ class Education extends Model
 
     protected $fillable = ['title', 'date', 'city', 'organiser_id', 'price', 'credits'];
 
+    protected $dates = ['date'];
+
     public function users()
     {
         return $this->belongsToMany(User::class);

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('education', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('date');
+            $table->date('date');
             $table->foreignId('organiser_id');
             $table->string('city')->nullable();
             $table->integer('price');
