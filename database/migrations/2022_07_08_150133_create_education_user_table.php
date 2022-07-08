@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('education_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->boolean('approved')->nullable();
             $table->timestamps();
         });
     }
