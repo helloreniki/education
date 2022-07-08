@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('work_email')->unique();
             $table->string('address');
-            $table->string('work_position_id');
-            $table->string('profession_id');
-            $table->string('department_id');
+            $table->foreignId('work_position_id');
+            $table->foreignId('profession_id');
+            $table->foreignId('department_id');
             $table->integer('phone_number');
             $table->date('date_of_employment');
             $table->timestamp('email_verified_at')->nullable();

@@ -11,6 +11,8 @@ class Education extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'date', 'city', 'organiser_id', 'price', 'credits'];
+
     public function users()
     {
         return $this->belongsToMany(User::class);

@@ -10,6 +10,8 @@ class Organiser extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function educations()
     {
         return $this->hasMany(Education::class);

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('date');
-            $table->string('organiser_id');
+            $table->foreignId('organiser_id');
             $table->string('city')->nullable();
             $table->integer('price');
             $table->integer('credits');
