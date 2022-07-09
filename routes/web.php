@@ -23,6 +23,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/employees', [UserController::class, 'index'])->middleware('auth')->name('employees.index');
+Route::get('/employees/create', [UserController::class, 'create'])->middleware('auth')->name('employees.create');
+Route::post('/employees/store', [UserController::class, 'store'])->middleware('auth')->name('employees.store');
 
 
 require __DIR__.'/auth.php';

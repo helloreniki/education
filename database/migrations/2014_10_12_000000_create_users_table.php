@@ -24,8 +24,8 @@ return new class extends Migration
             $table->foreignId('department_id');
             $table->string('phone_number');
             $table->date('date_of_employment');
-            $table->integer('licence_number');
-            $table->date('licence_start_date');
+            $table->integer('licence_number')->nullable();
+            $table->date('licence_start_date')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
