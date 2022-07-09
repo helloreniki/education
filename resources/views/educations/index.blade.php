@@ -13,11 +13,36 @@
       </div>
     </div>
 
-    {{-- Search --}}
-    <div class="mt-10">
-      <form action="{{ route('educations.index') }}" method="get">
-        <x-input type="text" name="search" placeholder="Search..." class="text-sm" value="{{request('search')}}" />
-      </form>
+    <div class="flex items-center justify-between mt-10">
+      <div class="flex items-center space-x-3">
+
+        {{-- Search --}}
+        <form action="{{ route('educations.index') }}" method="get">
+          <x-input type="text" name="search" placeholder="Search..." class="text-sm" value="{{request('search')}}" />
+        </form>
+
+        {{-- Filter by Organiser --}}
+        <div x-data="{showOrganisers: false}" class="relative">
+          <button  @click="showOrganisers = !showOrganisers" class="text-sm text-gray-500 pl-3 pr-14 py-2 rounded-md shadow-sm border border-gray-300">
+            FilterBy Organiser
+          </button>
+          <div x-show="showOrganisers" class="absolute flex flex-col mt-3 text-sm text-gray-500 px-1 z-1 bg-gray-50 border rounded">
+            <a href="/educations" class="px-3 py-1 hover:bg-gray-100 hover:rounded-md">All</a>
+            @foreach ($organisers as $organiser)
+            <a href="/educations/?organiser={{ $organiser->name }}" class="px-3 py-1 hover:bg-gray-100 hover:rounded-md">{{ $organiser->name}}</a>
+            @endforeach
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Upcomming / Past / All -->
+      <div class="flex space-x-8 font-semibold">
+        <a href="/educations" class="text-sm hover:text-indigo-600 @if(!request('upcoming') && !request('past')) text-indigo-600 @endif">All</a>
+        <a href="/educations?upcoming=upcoming" class="text-sm hover:text-indigo-600 @if(request('upcoming')) text-indigo-600 @endif">Upcoming</a>
+        <a href="/educations?past=past" class="text-sm hover:text-indigo-600 @if(request('past')) text-indigo-600 @endif">Past</a>
+      </div>
+
     </div>
 
     {{-- Table --}}

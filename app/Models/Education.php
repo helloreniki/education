@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Organiser;
 use Illuminate\Database\Eloquent\Model;
@@ -27,8 +28,21 @@ class Education extends Model
 
     public function scopeFilter($query, array $filters)
     {
-        return $query->when($filters['search'] ?? false, fn($query, $search) =>
+        $query->when($filters['search'] ?? false, fn($query, $search) =>
             $query->where('title', 'like', '%' . $search . '%')
         );
+
+        $query->when($filters['upcoming'] ?? false, fn($query) =>
+            $query->where('date', '>', now())
+        );
+
+        $query->when($filters['past'] ?? false, fn($query) =>
+            $query->where('date', '<=', now())
+        );
+
+        $query->when($filters['upcoming'] ?? false, fn($query) =>
+            $query->where('date', '>', now())
+        );
+
     }
 }
