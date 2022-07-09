@@ -24,4 +24,11 @@ class Education extends Model
     {
         return $this->belongsTo(Organiser::class);
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        return $query->when($filters['search'] ?? false, fn($query, $search) =>
+            $query->where('title', 'like', '%' . $search . '%')
+        );
+    }
 }

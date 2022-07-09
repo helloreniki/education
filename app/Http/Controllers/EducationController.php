@@ -11,7 +11,10 @@ class EducationController extends Controller
     public function index()
     {
         return view('educations.index', [
-            'educations' => Education::with('organiser')->latest('date')->paginate(15),
+            'educations' => Education::with('organiser')->latest('date')
+                    ->filter(request(['search']))
+                    ->paginate(15)
+                    ->withQueryString(),
         ]);
     }
 
