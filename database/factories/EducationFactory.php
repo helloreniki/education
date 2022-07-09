@@ -21,7 +21,7 @@ class EducationFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'date' => fake()->dateTimeThisYear(),
+            'date' => fake()->dateTimeBetween('-2years', '+9months'),
             'city' => fake()->city(),
             'organiser_id' => Organiser::inRandomOrder()->first(),
             'price' => rand(100,400),
