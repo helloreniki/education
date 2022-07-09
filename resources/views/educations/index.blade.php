@@ -9,9 +9,11 @@
       </div>
 
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-        <a href="" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add new education</a>
+        <a href="{{ route('educations.create') }}" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add new education</a>
       </div>
     </div>
+
+    {{-- Table --}}
     <div class="mt-8 flex flex-col">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -28,9 +30,8 @@
                   <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span class="sr-only">Edit</span>
                     <span class="sr-only">Delete</span>
-                    <span class="sr-only">Delete</span>
-
                   </th>
+                  <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6"> <span class="sr-only">Apply</span></th>
                 </tr>
               </thead>
 
@@ -44,12 +45,13 @@
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{{ $education->price }} €</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{{ $education->credits }}</td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
-                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">E</a>
                       <a href="#" class="text-red-600 hover:text-red-700">Delete</a>
+                    </td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
                       @if ($education->date > now())
-                      <a href="#" class="text-red-600 hover:text-red-700">Apply</a>
+                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Apply</a>
                       @endif
-
                     </td>
                   </tr>
                 @endforeach

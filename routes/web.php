@@ -28,6 +28,8 @@ Route::get('/employees/create', [UserController::class, 'create'])->middleware('
 Route::post('/employees/store', [UserController::class, 'store'])->middleware('auth')->name('employees.store');
 
 Route::get('/educations', [EducationController::class, 'index'])->middleware('auth')->name('educations.index');
+Route::get('/educations/create', [EducationController::class, 'create'])->middleware('auth')->name('educations.create');
+Route::post('/educations', [EducationController::class, 'store'])->middleware('auth')->name('educations.store');
 
 
 require __DIR__.'/auth.php';
