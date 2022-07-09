@@ -17,10 +17,16 @@
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <div class="flex py-12 px-4 ">
+              {{-- sidebar --}}
+              @include('layouts.sidebar')
+
+              <!-- Page Content -->
+              <div class="w-full max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                  {{ $slot }}
+                </div>
+              </div>
         </div>
     </body>
 </html>

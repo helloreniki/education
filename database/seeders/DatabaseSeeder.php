@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Moderator'
         ]);
 
-        $simple_users = User::factory(10)->create();
+        $simple_users = User::factory(30)->create();
 
         $roles = ['admin', 'moderator', 'user'];
         foreach ($roles as $role) {
