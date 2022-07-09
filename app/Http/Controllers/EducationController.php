@@ -12,7 +12,7 @@ class EducationController extends Controller
     {
         return view('educations.index', [
             'educations' => Education::with('organiser')->latest('date')
-                    ->filter(request(['search', 'upcoming', 'past']))
+                    ->filter(request(['search', 'upcoming', 'past', 'organiser']))
                     ->paginate(15)
                     ->withQueryString(),
             'organisers' => Organiser::all(),

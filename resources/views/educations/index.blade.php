@@ -23,9 +23,9 @@
 
         {{-- Filter by Organiser --}}
         <div x-data="{showOrganisers: false}" class="relative">
-          <button  @click="showOrganisers = !showOrganisers" class="text-sm text-gray-500 pl-3 pr-14 py-2 rounded-md shadow-sm border border-gray-300">
-            FilterBy Organiser
-          </button>
+          <div @click="showOrganisers = !showOrganisers" class="text-sm text-gray-500 pl-3 pr-14 py-2 rounded-md shadow-sm border border-gray-300">
+            {{ request('organiser') ?? 'FilterBy Organiser' }}
+          </div>
           <div x-show="showOrganisers" class="absolute flex flex-col mt-3 text-sm text-gray-500 px-1 z-1 bg-gray-50 border rounded">
             <a href="/educations" class="px-3 py-1 hover:bg-gray-100 hover:rounded-md">All</a>
             @foreach ($organisers as $organiser)

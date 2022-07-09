@@ -44,5 +44,11 @@ class Education extends Model
             $query->where('date', '>', now())
         );
 
+        $query->when($filters['organiser'] ?? false, fn($query) =>
+            $query->whereHas('organiser', fn($query) =>
+                $query->where('name', request('organiser'))
+            )
+        );
+
     }
 }
