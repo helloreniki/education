@@ -24,7 +24,7 @@
                           <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Employee Name</th>
                           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Work Position</th>
                           <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Profession</th>
-                          <th scope="col" class="px-3 py-3.5 text-sm font-semibold text-gray-900 text-center">Approve?</th>
+                          <th scope="col" class="px-3 py-3.5 text-sm font-semibold text-gray-900 text-right">Approve?</th>
                         </tr>
                       </thead>
 
@@ -36,15 +36,15 @@
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->profession->name }}</td>
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
 
-                              <div class="flex items-center justify-center space-x-2">
+                              <div x-data="" class="flex items-center justify-end space-x-2">
                                 <form action="{{ route('employee.education.store', ['user' => $user, 'education' => $education]) }}" method="POST">
                                   @csrf
-                                  <x-button type="submit" class="bg-indigo-600 hover:bg-indigo-900">Yes</x-button>
+                                  <x-button type="submit" @click="confirm('You will APPROVE {{ $user->name }} {{ $education->title }}? \nAre you sure?')" class="bg-indigo-600 hover:bg-indigo-900">Yes</x-button>
                                 </form>
                                 <form action="{{ route('employee.education.destroy', [$user, $education]) }}" method="POST">
                                   @csrf
                                   @method('DELETE')
-                                  <x-button class="submit">No</x-button>
+                                  <x-button type="submit" @click="confirm('You will NOT APPROVE {{ $user->name }} {{ $education->title }}? \nAre you sure?')">No</x-button>
                                 </form>
 
                               </div>
