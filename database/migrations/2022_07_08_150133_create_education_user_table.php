@@ -14,10 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('education_user', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
+            $table->primary(['user_id', 'education_id']);
             $table->foreignId('education_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->boolean('approved')->nullable();
+
+
             $table->timestamps();
         });
     }

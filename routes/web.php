@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ApproveController;
 use App\Http\Controllers\EducationController;
 use App\Http\Controllers\UserEducationController;
 
@@ -36,6 +37,11 @@ Route::get('/users/{user}/educations', [UserController::class, 'show'])->middlew
 
 Route::get('/users/{user}/educations/{education}/create', [UserEducationController::class, 'create'])->middleware('auth')->name('employee.education.create');
 Route::post('/users/{user}/educations/{education}', [UserEducationController::class, 'store'])->middleware('auth')->name('employee.education.store');
+
+Route::get('/users-educations', [UserEducationController::class, 'index'])->middleware('auth')->name('employee.education.index');
+
+Route::post('/approve/{user}/{education}', [ApproveController::class, 'store'])->middleware('auth')->name('employee.education.store');
+Route::delete('/approve/{user}/{education}', [ApproveController::class, 'destroy'])->middleware('auth')->name('employee.education.destroy');
 
 
 require __DIR__.'/auth.php';
