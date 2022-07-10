@@ -32,7 +32,10 @@ Route::get('/educations', [EducationController::class, 'index'])->middleware('au
 Route::get('/educations/create', [EducationController::class, 'create'])->middleware('auth')->name('educations.create');
 Route::post('/educations', [EducationController::class, 'store'])->middleware('auth')->name('educations.store');
 
-Route::get('/{user}/educations', [UserController::class, 'show'])->middleware('auth')->name('employee.show');
+Route::get('/users/{user}/educations', [UserController::class, 'show'])->middleware('auth')->name('employee.show');
+
+Route::get('/users/{user}/educations/{education}/create', [UserEducationController::class, 'create'])->middleware('auth')->name('employee.education.create');
+Route::post('/users/{user}/educations/{education}', [UserEducationController::class, 'store'])->middleware('auth')->name('employee.education.store');
 
 
 require __DIR__.'/auth.php';

@@ -1,6 +1,4 @@
 <x-app-layout>
-
-  <!-- This example requires Tailwind CSS v2.0+ -->
   <div class="px-4 sm:px-6 lg:px-8 py-6">
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
@@ -15,12 +13,10 @@
 
     <div class="flex items-center justify-between mt-10">
       <div class="flex items-center space-x-3">
-
         {{-- Search --}}
         <form action="{{ route('educations.index') }}" method="get">
           <x-input type="text" name="search" placeholder="Search..." class="text-sm" value="{{request('search')}}" />
         </form>
-
         {{-- Filter by Organiser --}}
         <div x-data="{showOrganisers: false}" class="relative">
           <div @click="showOrganisers = !showOrganisers" class="text-sm text-gray-500 pl-3 pr-14 py-2 rounded-md shadow-sm border border-gray-300">
@@ -33,7 +29,6 @@
             @endforeach
           </div>
         </div>
-
       </div>
 
       <!-- Upcomming / Past / All -->
@@ -42,7 +37,6 @@
         <a href="/educations?upcoming=upcoming" class="text-sm hover:text-indigo-600 @if(request('upcoming')) text-indigo-600 @endif">Upcoming</a>
         <a href="/educations?past=past" class="text-sm hover:text-indigo-600 @if(request('past')) text-indigo-600 @endif">Past</a>
       </div>
-
     </div>
 
     {{-- Table --}}
@@ -82,7 +76,7 @@
                     </td>
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
                       @if ($education->date > now())
-                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Apply</a>
+                      <a href="{{ route('employee.education.create', ['user' => auth()->user(), 'education' => $education]) }}" class="text-indigo-600 hover:text-indigo-900">Apply</a>
                       @endif
                     </td>
                   </tr>
@@ -98,8 +92,6 @@
         </div>
       </div>
 
-
-
-    </div>
+    </div> {{-- End of Table --}}
   </div>
 </x-app-layout>
