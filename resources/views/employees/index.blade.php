@@ -31,7 +31,9 @@
                 <tbody class="divide-y divide-gray-200 bg-white">
                   @foreach ($users as $user)
                     <tr>
-                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $user->name }}</td>
+                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                        <a href="{{ route('employee.show', $user) }}">{{ $user->name }}</a>
+                      </td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->email }}</td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->work_position->name }}</td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->profession->name }}</td>

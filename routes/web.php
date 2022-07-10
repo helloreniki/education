@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\UserEducationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,8 @@ Route::post('/employees/store', [UserController::class, 'store'])->middleware('a
 Route::get('/educations', [EducationController::class, 'index'])->middleware('auth')->name('educations.index');
 Route::get('/educations/create', [EducationController::class, 'create'])->middleware('auth')->name('educations.create');
 Route::post('/educations', [EducationController::class, 'store'])->middleware('auth')->name('educations.store');
+
+Route::get('/{user}/educations', [UserController::class, 'show'])->middleware('auth')->name('employee.show');
 
 
 require __DIR__.'/auth.php';

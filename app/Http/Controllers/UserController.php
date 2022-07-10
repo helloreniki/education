@@ -50,4 +50,25 @@ class UserController extends Controller
 
         return redirect()->route('employees.index')->with('message', 'New employee created successfully!');
     }
+
+    public function show(User $user)
+    {
+        // A and (B or C)
+        $userEducationsPast = $user->educations()->with('organiser')
+            ->where('date', '>', now())
+            ->where(fn($query) =>
+                $query  ->where('approved', 1) // not ->where('approved', true) (true is not null: 0 or 1 both true)
+                        ->orWhere('price', 0)
+            )
+            ->latest()
+            ->paginate(3);
+        $userEducationsUpcoming = $user->educations()->with('organiser')->where('date', '>=', now())->oldest()->get();
+        // dd($userEducationsPast);
+
+        return view('employees.show', [
+            'user' => $user,
+            'userEducationsPast' => $userEducationsPast,
+            'userEducationsUpcoming' => $userEducationsUpcoming,
+        ]);
+    }
 }
