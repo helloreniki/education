@@ -18,7 +18,7 @@ class Education extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('approved');
+        return $this->belongsToMany(User::class)->withPivot('approved', 'certificate');
     }
 
     public function organiser()

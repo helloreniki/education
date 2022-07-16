@@ -73,7 +73,7 @@ class User extends Authenticatable
 
     public function educations()
     {
-        return $this->belongsToMany(Education::class)->withPivot('approved');
+        return $this->belongsToMany(Education::class)->withPivot('approved', 'certificate');
     }
 
     public function department()

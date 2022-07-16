@@ -31,17 +31,17 @@
                       <tbody class="divide-y divide-gray-200 bg-white">
                         @foreach ($education->users as $user)
                           <tr>
-                            <td class="whitespace-pre   py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $user->name }}</td>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $user->name }}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->work_position->name }}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $user->profession->name }}</td>
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
 
                               <div x-data="" class="flex items-center justify-end space-x-2">
-                                <form action="{{ route('employee.education.store', ['user' => $user, 'education' => $education]) }}" method="POST">
+                                <form action="{{ route('approve.store', ['user' => $user, 'education' => $education]) }}" method="POST">
                                   @csrf
                                   <x-button type="submit" @click="confirm('You will APPROVE {{ $user->name }} {{ $education->title }}? \nAre you sure?')" class="bg-indigo-600 hover:bg-indigo-900">Yes</x-button>
                                 </form>
-                                <form action="{{ route('employee.education.destroy', [$user, $education]) }}" method="POST">
+                                <form action="{{ route('approve.destroy', [$user, $education]) }}" method="POST">
                                   @csrf
                                   @method('DELETE')
                                   <x-button type="submit" @click="confirm('You will NOT APPROVE {{ $user->name }} {{ $education->title }}? \nAre you sure?')">No</x-button>

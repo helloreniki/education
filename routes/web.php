@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ApproveController;
 use App\Http\Controllers\EducationController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\UserEducationController;
 
 /*
@@ -40,8 +41,11 @@ Route::post('/users/{user}/educations/{education}', [UserEducationController::cl
 
 Route::get('/users-educations', [UserEducationController::class, 'index'])->middleware('auth')->name('employee.education.index');
 
-Route::post('/approve/{user}/{education}', [ApproveController::class, 'store'])->middleware('auth')->name('employee.education.store');
-Route::delete('/approve/{user}/{education}', [ApproveController::class, 'destroy'])->middleware('auth')->name('employee.education.destroy');
+Route::post('/approve/{user}/{education}', [ApproveController::class, 'store'])->middleware('auth')->name('approve.store');
+Route::delete('/approve/{user}/{education}', [ApproveController::class, 'destroy'])->middleware('auth')->name('approve.destroy');
+
+Route::post('/users/{user}/educations/{education}/certificate', [CertificateController::class, 'store'])->middleware('auth')->name('certificate.store');
+Route::get('/users/{user}/educations/{education}/certificate/download', [CertificateController::class, 'download'])->middleware('auth')->name('certificate.download');
 
 
 require __DIR__.'/auth.php';

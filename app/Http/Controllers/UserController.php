@@ -55,7 +55,7 @@ class UserController extends Controller
     {
         // A and (B or C)
         $userEducationsPast = $user->educations()->with('organiser')
-            ->where('date', '>', now())
+            ->where('date', '<', now())
             ->where(fn($query) =>
                 $query  ->where('approved', 1) // not ->where('approved', true) (true is not null: 0 or 1 both true)
                         ->orWhere('price', 0)

@@ -44,7 +44,7 @@
                       <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $education->date->format('d.m.Y') }}</td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->title }}</td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->organiser->name }}</td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->price }}</td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->price }} €</td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->credits }}</td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->pivot->approved ? 'Approved' : 'Pending' }}</td>
                     </tr>
@@ -75,6 +75,8 @@
                   <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Organiser</th>
                   <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Price</th>
                   <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Credits</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Certificate</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Upload</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 bg-white">
@@ -83,8 +85,27 @@
                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ $education->date->format('d.m.Y') }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->title }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->organiser->name }}</td>
-                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->price }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->price }} €</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->credits }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      @if ($education->pivot->certificate)
+                        <a href="{{ route('certificate.download', [$user, $education]) }}">Download</a>
+                      @endif
+                    </td>
+
+                    <td class="text-sm text-gray-500">
+
+                      <form action="{{ route('certificate.store', [$user,$education]) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="flex mr-2">
+                          <input type="file" name="certificate">
+                          <x-button class="bg-indigo-600 hover:bg-indigo-700" type="submit">Save</x-button>
+                        </div>
+                        @error('certificate')<p class="text-red-500 text-sm">{{ $message }}</p>@enderror
+                      </form>
+
+                    </td>
+
                   </tr>
                 @empty
                 <tr>

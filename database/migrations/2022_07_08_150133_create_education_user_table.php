@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('education_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->boolean('approved')->nullable();
-
+            $table->string('certificate')->nullable();
 
             $table->timestamps();
         });
