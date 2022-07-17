@@ -80,4 +80,32 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function educations_approved()
+    {
+        // where (approved = 1 OR price = 0) AND where date < now
+        return $this->educations()
+            ->where(fn($q) =>
+                $q->where('approved', 1)
+                  ->orWhere('price', 0)
+            )
+            ->where('date', '<', now())
+            ->get();
+    }
+
+    public function totalPrice()
+    {
+        // get all user's educations(past, attended or price 0 (filter) -> sum by ($education-price)
+
+        // $user_educations_approved = $user->educations()->where('approved', 1)->get();
+        // $user_educations_approved = $this->educations()->where('approved', 1)->where('date', '<', now())->get();
+
+        return $this->educations_approved()->sum('price');
+
+    }
+
+    public function totalCredits()
+    {
+        return $this->educations_approved()->sum('credits');
+    }
 }

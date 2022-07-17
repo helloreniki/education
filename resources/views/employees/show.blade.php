@@ -113,6 +113,16 @@
                 </tr>
                 @endforelse
 
+                <tr class="bg-gray-200">
+                  <td></td>
+                  <td></td>
+                  <td class="whitespace-nowrap px-3 py-4 font-semibold">Total</td>
+                  <td class="whitespace-nowrap px-3 py-4 font-semibold">{{ $user->totalPrice() }} €</td>
+                  <td class="whitespace-nowrap px-3 py-4 font-semibold">{{ $user->totalCredits() }}</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
               </tbody>
             </table>
           </div>
