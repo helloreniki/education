@@ -8,6 +8,7 @@ use App\Models\Profession;
 use Illuminate\Support\Str;
 use App\Models\WorkPosition;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -53,6 +54,15 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        // user can only see their own profile
+        // if ($user->id !== auth()->user()->id) return 'not authorised';
+        // $this->authorize('see_user_educations', $user);
+        // dump($user->id);
+        // $this->authorize('see_my_own', $user);
+        // if (Gate::denies('see_my_own', $user)) {
+        //     abort(403);
+        // }
+
         // A and (B or C)
         $userEducationsPast = $user->educations()->with('organiser')
             ->where('date', '<', now())

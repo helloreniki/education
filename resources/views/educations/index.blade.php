@@ -5,10 +5,13 @@
         <h1 class="text-xl font-semibold text-gray-900">Educations</h1>
         <p class="mt-2 text-sm text-gray-700">A list of all educations for this company. Past and upcoming.</p>
       </div>
-
+      {{-- @if(auth()->user()->hasPermission('manage_educations')) --}}
+      @can('manage_educations')
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
         <a href="{{ route('educations.create') }}" class="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">Add new education</a>
       </div>
+      @endcan
+      {{-- @endif --}}
     </div>
 
     <div class="flex items-center justify-between mt-10">
@@ -70,10 +73,14 @@
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $education->city }}</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{{ $education->price }} €</td>
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{{ $education->credits }}</td>
-                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
-                      <a href="#" class="text-indigo-600 hover:text-indigo-900">E</a>
-                      <a href="#" class="text-red-600 hover:text-red-700">Delete</a>
-                    </td>
+                    {{-- @if(auth()->user()->hasPermission('can_manage_educations')) --}}
+                    @can('manage_educations', $education)
+                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-900">E</a>
+                        <a href="#" class="text-red-600 hover:text-red-700">Delete</a>
+                      </td>
+                    @endcan
+                    {{-- @endif --}}
                     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
                       @if ($education->date > now())
                       <a href="{{ route('employee.education.create', ['user' => auth()->user(), 'education' => $education]) }}" class="text-indigo-600 hover:text-indigo-900">Apply</a>

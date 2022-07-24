@@ -11,6 +11,14 @@ class CertificateController extends Controller
 {
     public function store(User $user, Education $education)
     {
+        // authorization basic
+        // if(auth()->user()->id !== $user->id && auth()->user()->id !== $education->user_id){ abort(403); }
+
+        // authorization with Gate
+        // $this->authorize('see_my_own', [$user, $education]);
+
+        // authorization with Gate on routes
+
         $data = request()->validate([
             'certificate' => 'required|file|mimes:pdf,jpeg,jpg,png|max:2000'
         ]);
@@ -30,15 +38,18 @@ class CertificateController extends Controller
 
     public function download(User $user, Education $education)
     {
+        // authorization basic (no Gate)
+        // if(auth()->user()->id === $user->id && auth()->user()->id !== $education->user_id){ abort(403); }
+
+        // authorization with Gate
+        // $this->authorize('see_my_own', [$user, $education]);
+
+        // authorization with Gate on routes
+
         // dd($education);
         $education = $user->educations()->where('education_id', $education->id)->first(); // not get()
         // dd($education->pivot->certificate);
         return Storage::download('certificates/' . $user->id . '/' . $education->pivot->certificate);
-
-        // $myFile = storage_path('certificates/' . $user->id . '/' . $education->pivot->certificate);
-        // return response()->download($myFile);
-
-        return back();
 
     }
 }

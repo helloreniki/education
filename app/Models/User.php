@@ -108,4 +108,27 @@ class User extends Authenticatable
     {
         return $this->educations_approved()->sum('credits');
     }
+
+    public function hasPermission($value)
+    {
+        $user_permissions = [];
+
+        foreach($this->roles as $role) {
+            foreach ($role->permissions as $permission) {
+                $user_permissions[] = $permission->name;
+            }
+        }
+
+        // remove duplicate values from array
+        $clean_user_permissions = array_unique($user_permissions);
+
+        return in_array($value, $clean_user_permissions); // true / false
+
+    }
+
+    // through roles
+    public function permissions()
+    {
+        return $this->roles->map->permissions->flatten()->pluck('name')->unique();
+    }
 }

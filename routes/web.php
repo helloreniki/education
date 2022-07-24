@@ -22,30 +22,54 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+ // all routes with middleware auth
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('/employees', [UserController::class, 'index'])->middleware('auth')->name('employees.index');
-Route::get('/employees/create', [UserController::class, 'create'])->middleware('auth')->name('employees.create');
-Route::post('/employees/store', [UserController::class, 'store'])->middleware('auth')->name('employees.store');
+    // all auth
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::get('/educations', [EducationController::class, 'index'])->middleware('auth')->name('educations.index');
-Route::get('/educations/create', [EducationController::class, 'create'])->middleware('auth')->name('educations.create');
-Route::post('/educations', [EducationController::class, 'store'])->middleware('auth')->name('educations.store');
+    Route::get('/educations', [EducationController::class, 'index'])->name('educations.index');
 
-Route::get('/users/{user}/educations', [UserController::class, 'show'])->middleware('auth')->name('employee.show');
+    // can manage users
+    Route::group(['middleware' => 'can:manage_users'], function () {
+        Route::get('/employees', [UserController::class, 'index'])->name('employees.index');
+        Route::get('/employees/create', [UserController::class, 'create'])->name('employees.create');
+        Route::post('/employees/store', [UserController::class, 'store'])->name('employees.store');
+    });
 
-Route::get('/users/{user}/educations/{education}/create', [UserEducationController::class, 'create'])->middleware('auth')->name('employee.education.create');
-Route::post('/users/{user}/educations/{education}', [UserEducationController::class, 'store'])->middleware('auth')->name('employee.education.store');
+    // can manage educations
+    Route::group(['middleware' => 'can:manage_educations'], function () {
+        Route::get('/educations/create', [EducationController::class, 'create'])->name('educations.create');
+        Route::post('/educations', [EducationController::class, 'store'])->name('educations.store');
+    });
 
-Route::get('/users-educations', [UserEducationController::class, 'index'])->middleware('auth')->name('employee.education.index');
+    // user educations: can see user educations & certificates, but not uploading certificates (manage users OR see_my_own),
+    Route::group(['middleware' => 'can:see_user_educations,user'], function () {
+        Route::get('/users/{user}/educations', [UserController::class, 'show'])->name('employee.show');
+        Route::get('/users/{user}/educations/{education}/certificate/download', [CertificateController::class, 'download'])->name('certificate.download');
+    });
 
-Route::post('/approve/{user}/{education}', [ApproveController::class, 'store'])->middleware('auth')->name('approve.store');
-Route::delete('/approve/{user}/{education}', [ApproveController::class, 'destroy'])->middleware('auth')->name('approve.destroy');
+    // can apply - all auth users, but just for yourself, to any education
+    Route::group(['middleware' => 'can:apply_to_education,user'], function () {
+        Route::get('/users/{user}/educations/{education}/create', [UserEducationController::class, 'create'])->name('employee.education.create');
+        Route::post('/users/{user}/educations/{education}', [UserEducationController::class, 'store'])->name('employee.education.store');
+    });
 
-Route::post('/users/{user}/educations/{education}/certificate', [CertificateController::class, 'store'])->middleware('auth')->name('certificate.store');
-Route::get('/users/{user}/educations/{education}/certificate/download', [CertificateController::class, 'download'])->middleware('auth')->name('certificate.download');
+    // can upload certificate (only me for myself, not for all educations, but my educations)
+    Route::group(['middleware' => 'can:upload_certificate,user,education'], function () {
+        Route::post('/users/{user}/educations/{education}/certificate', [CertificateController::class, 'store'])->name('certificate.store');
+    });
+
+    // can approve
+    Route::group(['middleware' => 'can:approve'], function () {
+        Route::get('/users-educations', [UserEducationController::class, 'index'])->name('employee.education.index')->middleware('can:approve');
+        Route::post('/approve/{user}/{education}', [ApproveController::class, 'store'])->name('approve.store');
+        Route::delete('/approve/{user}/{education}', [ApproveController::class, 'destroy'])->name('approve.destroy');
+    });
+
+});
 
 
 require __DIR__.'/auth.php';
