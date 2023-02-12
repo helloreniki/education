@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'can:manage_educations'], function () {
         Route::get('/educations/create', [EducationController::class, 'create'])->name('educations.create');
         Route::post('/educations', [EducationController::class, 'store'])->name('educations.store');
+        Route::delete('/educations/{education}', [EducationController::class, 'destroy'])->name('educations.destroy');
     });
 
     // user educations: can see user educations & certificates, but not uploading certificates (manage users OR see_my_own),
@@ -51,8 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/users/{user}/educations/{education}/certificate/download', [CertificateController::class, 'download'])->name('certificate.download');
     });
 
-    // can apply - all auth users, but just for yourself, to any education
-    Route::group(['middleware' => 'can:apply_to_education,user'], function () {
+    // can apply - all auth users, but just for yourself, to any education, but not past
+    Route::group(['middleware' => 'can:apply_to_education,user,education'], function () {
         Route::get('/users/{user}/educations/{education}/create', [UserEducationController::class, 'create'])->name('employee.education.create');
         Route::post('/users/{user}/educations/{education}', [UserEducationController::class, 'store'])->name('employee.education.store');
     });

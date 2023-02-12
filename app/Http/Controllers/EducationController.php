@@ -41,4 +41,11 @@ class EducationController extends Controller
 
         return redirect()->route('educations.index')->with('message', 'New Education was added successfully!');
     }
+
+    public function destroy(Education $education)
+    {
+        $education->delete();
+
+        return back()->with('success', 'Education was deleted successfully!');
+    }
 }

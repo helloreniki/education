@@ -75,9 +75,15 @@
                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center">{{ $education->credits }}</td>
                     {{-- @if(auth()->user()->hasPermission('can_manage_educations')) --}}
                     @can('manage_educations', $education)
-                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 space-x-2">
+                      <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 flex space-x-2">
                         <a href="#" class="text-indigo-600 hover:text-indigo-900">E</a>
-                        <a href="#" class="text-red-600 hover:text-red-700">Delete</a>
+
+                        <form action="{{ route('educations.destroy', $education) }}" method="post">
+                          @csrf
+                          @method('delete')
+                          <button type="submit" onclick="return confirm('Are you sure you want to DELETE {{$education->title}}?')" class="inline-block text-red-600 hover:text-red-700">Delete</button>
+                        </form>
+
                       </td>
                     @endcan
                     {{-- @endif --}}
@@ -93,6 +99,7 @@
             </table>
           </div>
           <div class="mt-3">
+            {{-- @dd($educations) --}}
             {{ $educations->links() }}
           </div>
 
