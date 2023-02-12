@@ -40,8 +40,8 @@ class DatabaseSeeder extends Seeder
         }
 
         $admin = \App\Models\User::factory()->create([
-            'name' => 'Renata',
-            'email' => 'renata@email.com',
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
         ]);
 
         $direktor = User::factory()->create([
@@ -49,7 +49,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $tajnica = User::factory()->create([
-            'name' => 'Tajnica'
+            'name' => 'Tajnica',
+            'email' => 'tajnica@test.com'
+        ]);
+
+        $user = User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@test.com'
         ]);
 
         $simple_users = User::factory(30)->create();
@@ -59,10 +65,11 @@ class DatabaseSeeder extends Seeder
             Role::factory()->create(['name' => $role]);
         }
 
-        // attach roles to users: admin, direktor, tajnica
+        // attach roles to users: admin, direktor, tajnica, simple user
         $admin->roles()->attach(1);
         $direktor->roles()->attach(1);
         $tajnica->roles()->attach(2);
+        $user->roles()->attach(3);
 
         foreach ($simple_users as $user) {
             $user->roles()->attach(3);
@@ -89,6 +96,7 @@ class DatabaseSeeder extends Seeder
             Organiser::factory()->create(['name' => $organiser]);
         }
 
+        // seed pivot table and create Education at the same time
         $users = User::all();
         foreach ($users as $user) {
             $user->educations()->attach(Education::factory(rand(2,6))->create());
