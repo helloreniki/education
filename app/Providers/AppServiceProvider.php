@@ -66,13 +66,13 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // upload only for myself, but only for educations that are on pivot table (applied)
-        Gate::define('upload_certificates', function (User $currentUser, User $user, Education $education) {
-            return $user->id === $currentUser->id && $user->id === $education->users()->contains($user->id);
+        Gate::define('upload_certificate', function (User $currentUser, User $user, Education $education) {
+            return $user->id === $currentUser->id && $education->users->contains($user->id);
         });
 
-        // apply only yourself to any education (cant apply someone else)
-        Gate::define('apply_to_education', function (User $currentUser, User $user) {
-            return $user->id === $currentUser->id;
+        // apply only yourself to any education (cant apply someone else), cant apply to past education
+        Gate::define('apply_to_education', function (User $currentUser, User $user, Education $education) {
+            return $user->id === $currentUser->id && $education->date >= now();
         });
 
     }
